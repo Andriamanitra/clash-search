@@ -31,12 +31,28 @@
     offset = offset + LIMIT;
     searchClashes();
   }
+
+  let dark = true;
+
   $: clashes = [...results["hits"]];
   $: console.log(results);
 </script>
 
 <header>
   <h1>Clash search</h1>
+  <button
+    class="darkmode-switch"
+    on:click={() => {
+      document.getElementsByTagName("body")[0].toggleAttribute("dark");
+      dark = !dark;
+    }}
+  >
+    {#if dark}
+      🌞
+    {:else}
+      🌙
+    {/if}
+  </button>
   <form on:submit={handleSearchChange}>
     <input
       id="searchbox"
@@ -50,7 +66,7 @@
 </header>
 <main>
   {#if results.estimatedTotalHits}
-    <p>
+    <p class="info">
       Results {offset + 1} - {offset + clashes.length} (of approximately {results.estimatedTotalHits}
       results in total)
     </p>
@@ -69,17 +85,16 @@
     {#each clashes as { title, nickname, publicHandle, codingamerHandle, lastVersion }}
       <div class="card">
         <a
-          class="card-body"
+          class="card-header"
           href="https://codingame.com/contribute/view/{publicHandle}"
         >
           <span class="title">{title}</span>
-          <span class="clash-statement">
-            {lastVersion.data.statement}
-          </span>
+          <span class="author">by {nickname || "Anonymous"}</span>
         </a>
-        <a class="user" href="https://codingame.com/profile/{codingamerHandle}">
-          <span class="user-info">by {nickname || "Anonymous"}</span>
-        </a>
+
+        <p class="card-content">
+          {lastVersion.data.statement}
+        </p>
       </div>
     {/each}
   </div>
