@@ -5,6 +5,7 @@ services:
     image: getmeili/meilisearch:v0.29
     environment:
       - "MEILI_MASTER_KEY=$MEILI_MASTER_KEY"
+      - "MEILI_ENV=$MEILI_ENV"
     ports:
       - 7700:7700
     volumes:

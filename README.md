@@ -40,7 +40,7 @@ Request body:
 
 
 ## Put clashes into MeiliSearch
-1. Run MeiliSearch with `docker-compose up -d` (shut it down with `docker-compose down` when you're done)
+1. Run MeiliSearch with `docker-compose --env-file ./.env.dev up -d` (shut it down with `docker-compose down` when you're done)
 2. `export MEILI_MASTER_KEY=MASTER_KEY`
 3. `curl -X POST "http://localhost:7700/indexes/clashes/documents" -H "Content-Type: application/json" -H "Authorization: Bearer $MEILI_MASTER_KEY" --data-binary @clashes.json`
 4. (optional) `curl -X PATCH "http://localhost:7700/indexes/clashes/settings" -H "Content-Type: application/json" -H "Authorization: Bearer $MEILI_MASTER_KEY" --data-binary @meili-indexes-clashes-settings.json`
@@ -55,6 +55,6 @@ Request body:
 
 
 ## Running the whole thing
-`docker-compose up -d` starts two services:
+`docker-compose --env-file ./.env.prod up -d` starts two services:
 1. MeiliSearch on http://localhost:7700 
 2. The front end (behind nginx) on http://localhost:8000 (this will serve the files from `frontend/dist` directory which is populated when you run `npm run build` – during development it's better to use `npm run dev` to see changes in real time)
