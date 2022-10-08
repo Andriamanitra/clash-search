@@ -41,7 +41,9 @@ Request body:
 
 ## Put clashes into MeiliSearch
 1. Run MeiliSearch with `docker-compose up -d` (shut it down with `docker-compose down` when you're done)
-2. `curl -X POST "http://localhost:7700/indexes/clashes/documents" -H "Content-Type: application/json" -H "Authorization: Bearer MASTER_KEY" --data-binary @clashes.json`
+2. `export MEILI_MASTER_KEY=MASTER_KEY`
+3. `curl -X POST "http://localhost:7700/indexes/clashes/documents" -H "Content-Type: application/json" -H "Authorization: Bearer $MEILI_MASTER_KEY" --data-binary @clashes.json`
+4. (optional) `curl -X PATCH "http://localhost:7700/indexes/clashes/settings" -H "Content-Type: application/json" -H "Authorization: Bearer $MEILI_MASTER_KEY" --data-binary @meili-indexes-clashes-settings.json`
 
 
 ## Developing front-end

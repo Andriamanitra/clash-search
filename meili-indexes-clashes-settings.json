@@ -1,0 +1,42 @@
+{
+    "displayedAttributes": [
+        "*"
+    ],
+    "searchableAttributes": [
+        "title",
+        "lastVersion.data.statement",
+        "nickname",
+        "lastVersion.data.testCases",
+        "lastVersion.data.inputDescription",
+        "lastVersion.data.outputDescription",
+        "lastVersion.data.constraints"
+    ],
+    "filterableAttributes": [],
+    "sortableAttributes": [],
+    "rankingRules": [
+        "words",
+        "typo",
+        "proximity",
+        "attribute",
+        "sort",
+        "exactness"
+    ],
+    "stopWords": [],
+    "synonyms": {},
+    "distinctAttribute": null,
+    "typoTolerance": {
+        "enabled": true,
+        "minWordSizeForTypos": {
+            "oneTypo": 5,
+            "twoTypos": 9
+        },
+        "disableOnWords": [],
+        "disableOnAttributes": []
+    },
+    "faceting": {
+        "maxValuesPerFacet": 100
+    },
+    "pagination": {
+        "maxTotalHits": 1000
+    }
+}
