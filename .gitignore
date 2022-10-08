@@ -1,3 +1,6 @@
 *clashes.json
 clashes/*.json
 meili_data/
+.env
+.envrc
+venv/
