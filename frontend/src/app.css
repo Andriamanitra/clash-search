@@ -14,9 +14,9 @@
 }
 
 /* keyboard accessibility */
-button:focus,
-input:focus,
-a:focus {
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
   outline: 4px solid var(--accent) !important;
 }
 
