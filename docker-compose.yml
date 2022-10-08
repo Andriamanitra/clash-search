@@ -4,8 +4,7 @@ services:
   meili:
     image: getmeili/meilisearch:v0.29
     environment:
-      # TODO: read these from environment variables or something
-      - MEILI_MASTER_KEY=MASTER_KEY
+      - "MEILI_MASTER_KEY=$MEILI_MASTER_KEY"
     ports:
       - 7700:7700
     volumes:
