@@ -35,23 +35,19 @@
   let dark = true;
 
   $: clashes = [...results["hits"]];
-  $: console.log(results);
 </script>
 
 <header>
   <h1>Clash search</h1>
   <button
     class="darkmode-switch"
+    title="Toggle dark mode"
     on:click={() => {
       document.getElementsByTagName("body")[0].toggleAttribute("dark");
       dark = !dark;
     }}
   >
-    {#if dark}
-      🌞
-    {:else}
-      🌙
-    {/if}
+    {dark ? "☀️" : "🌙"}
   </button>
   <form on:submit={handleSearchChange}>
     <input
@@ -89,7 +85,12 @@
           href="https://codingame.com/contribute/view/{publicHandle}"
         >
           <span class="title">{title}</span>
-          <span class="author">by {nickname || "Anonymous"}</span>
+
+          <span class="author"
+            >by <a href="https://codingame.com/{codingamerHandle}">
+              {nickname || "Anonymous"}
+            </a>
+          </span>
         </a>
 
         <p class="card-content">

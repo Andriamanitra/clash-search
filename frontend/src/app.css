@@ -10,6 +10,14 @@
   --light-gray: #ddd;
   --box-shadow-light: rgba(0, 0, 0, 0.15);
   --box-shadow-dark: rgba(255, 255, 255, 0.15);
+  --accent: rgb(28, 188, 194);
+}
+
+/* keyboard accessibility */
+button:focus,
+input:focus,
+a:focus {
+  outline: 4px solid var(--accent) !important;
 }
 
 /* ------------------------------- */
@@ -17,7 +25,7 @@
 body {
   background-color: var(--white);
   color: var(--black);
-  max-width: 90%;
+  max-width: min(120ch, 90%);
   margin: auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -25,6 +33,7 @@ body {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 0.2s;
 }
+
 body[dark] {
   background-color: var(--black);
   color: var(--white);
@@ -49,6 +58,7 @@ body[dark] {
   border-radius: 100%;
   font-size: large;
 }
+
 body[dark] .darkmode-switch {
   background: var(--almost-black);
 }
@@ -74,13 +84,17 @@ input {
   border-color: #d1d5db;
   border-style: solid;
 }
+
 input:invalid {
   color: red;
 }
+
 body[dark] input {
   color: var(--white);
+  border-color: #555;
   background-color: var(--black);
 }
+
 body[dark] input:invalid {
   color: red;
 }
@@ -100,17 +114,21 @@ button {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 0.2s;
 }
+
 button:hover:enabled {
   background: var(--gray);
   color: var(--white);
 }
+
 body[dark] button {
   background: var(--dark-gray);
   color: var(--white);
 }
+
 body[dark] button:hover:enabled {
   background: var(--gray);
 }
+
 body[dark] button:disabled,
 button:disabled {
   opacity: 0.5;
@@ -123,6 +141,7 @@ button:disabled {
   color: var(--gray);
   font-size: small;
 }
+
 body[dark] .info {
   color: var(--lighter-gray);
 }
@@ -142,6 +161,7 @@ body[dark] .info {
   padding: 1rem;
   flex-direction: column;
 }
+
 body[dark] .card {
   background-color: var(--almost-black);
 }
@@ -152,12 +172,14 @@ body[dark] .card {
   color: inherit;
   text-decoration: inherit;
   font-weight: inherit;
-  padding: 1rem;
+  padding: 0.2rem 1rem;
   border-radius: 0.25rem;
 }
+
 .card-header:hover {
   background-color: var(--light-gray);
 }
+
 body[dark] .card-header:hover {
   background-color: var(--dark-gray);
 }
@@ -172,14 +194,26 @@ body[dark] .card-header:hover {
   font-size: medium;
 }
 
+.author>a {
+  color: inherit;
+  text-decoration: inherit;
+  border-radius: 3px;
+}
+
+.author>a:hover {
+  text-decoration: underline;
+}
+
 .card-content {
   display: block;
   color: var(--gray);
   padding-top: 0px;
   padding: 1rem;
   font-size: large;
+  white-space: pre-wrap;
   margin: 0px;
 }
+
 body[dark] .card-content {
   color: var(--light-gray);
 }
