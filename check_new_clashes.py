@@ -1,19 +1,29 @@
+import asyncio
+from collections import namedtuple
 import json
 import os
-import asyncio
+import sys
 import time
-from collections import namedtuple
 
 import httpx
 
 MEILI_URL = "http://localhost:7700/indexes/clashes/documents"
-MEILI_KEY = os.environ.get("MEILI_KEY")
+MEILI_UPDATE_KEY = os.environ.get("MEILI_UPDATE_KEY")
+# the timestamp of the most recent update (as epoch time in milliseconds)
+LAST_UPDATED_TIME = int(os.environ.get("LAST_UPDATED_TIME") or 1665000000000)
 
 ClashCheckResult = namedtuple("ClashCheckResult", ["updated_count", "timestamp"])
 
 
 def time_ms():
     return time.time_ns() // 1000000
+
+
+def explanation(exc: httpx.HTTPError):
+    if isinstance(exc, httpx.HTTPStatusError):
+        return f"HTTP {exc.response.status_code}"
+    else:
+        return type(exc).__name__
 
 
 async def get_clash(session, clash_handle):
@@ -35,11 +45,8 @@ async def check_clash_updates(session, last_updated_time) -> ClashCheckResult:
             json=["CLASHOFCODE"]
         )
         resp.raise_for_status()
-    except httpx.ReadTimeout:
-        print("Timed out!")
-        return ClashCheckResult(0, last_updated_time)
-    except httpx.HTTPStatusError as exc:
-        print(f"{last_updated_time} : Failed to get clashes : {exc}")
+    except httpx.HTTPError as exc:
+        print(f"{last_updated_time} : Failed to get clashes ({explanation(exc)})")
         return ClashCheckResult(0, last_updated_time)
 
     with open("list_of_clashes.json", "w") as f:
@@ -60,8 +67,8 @@ async def check_clash_updates(session, last_updated_time) -> ClashCheckResult:
             print(f"- New/updated clash '{clash_title}' by {clash_creator}")
             try:
                 response = await get_clash(session, clash_handle)
-            except (httpx.HTTPStatusError, httpx.ReadTimeout) as exc:
-                print(f"\nProblem fetching clash ({exc})")
+            except httpx.HTTPError as exc:
+                print(f"Problem fetching clash ({explanation(exc)})")
                 return ClashCheckResult(0, last_updated_time)
             else:
                 updated_clashes.append((clash_handle, response.text))
@@ -72,16 +79,16 @@ async def check_clash_updates(session, last_updated_time) -> ClashCheckResult:
             with open(f"clashes/{clash_handle}.json", "w") as f:
                 f.write(clash_text)
 
-        if MEILI_KEY:
+        if MEILI_UPDATE_KEY:
             new_docs = [json.loads(clash_text) for _, clash_text in updated_clashes]
             try:
                 httpx.post(
                     MEILI_URL,
-                    headers={"Authorization": f"Bearer {MEILI_KEY}"},
+                    headers={"Authorization": f"Bearer {MEILI_UPDATE_KEY}"},
                     json=new_docs
                 ).raise_for_status()
-            except httpx.HTTPStatusError:
-                print("- Failed to update MeiliSearch index!")
+            except httpx.HTTPError as exc:
+                print(f"- Failed to update MeiliSearch index! ({explanation(exc)})")
             else:
                 print("- Successfully updated MeiliSearch index!")
     
@@ -90,17 +97,19 @@ async def check_clash_updates(session, last_updated_time) -> ClashCheckResult:
 
 
 async def amain():
-    last_updated_time = 1665190791227  # epoch time (milliseconds)
+    last_updated_time = LAST_UPDATED_TIME
     check_interval = 3600  # seconds
     cookies = httpx.Cookies()
-    # the CLASH_SEARCH_SECRET_COOKIES environment variable should have a value
+    # the CODINGAME_COOKIES environment variable should have a value
     # like this (can be copy-pasted from Firefox dev tools):
-    # CLASH_SEARCH_SECRET_COOKIES="Cookie: rememberMe=badc0de; AWSALB=BaDcOdE+EvEnWoRsECoDe==; AWSALBCORS=BaDcOdE+EvEnWoRsECoDe==; cgSession=baaaaaad-1337-c0de-abcdef123456"
-    secret_cookies = os.environ.get("CLASH_SEARCH_SECRET_COOKIES")
+    # CODINGAME_COOKIES="Cookie: rememberMe=badc0de; AWSALB=BaDcOdE+EvEnWoRsECoDe==; AWSALBCORS=BaDcOdE+EvEnWoRsECoDe==; cgSession=baaaaaad-1337-c0de-abcdef123456"
+    secret_cookies = os.environ.get("CODINGAME_COOKIES")
     if secret_cookies:
         for part in secret_cookies.removeprefix("Cookie: ").split("; "):
             k, _, v = part.partition("=")
             cookies.set(k, v)
+    else:
+        print("[WARNING] CODINGAME_COOKIES is not set, this might not work", file=sys.stderr)
 
     async with httpx.AsyncClient(cookies=cookies) as session:
         while True:

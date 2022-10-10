@@ -1,8 +1,9 @@
 <script>
   import { MeiliSearch } from "meilisearch";
+
   const client = new MeiliSearch({
-    host: "http://localhost:7700",
-    apiKey: "MASTER_KEY",
+    host: import.meta.env.VITE_MEILI_URL,
+    apiKey: import.meta.env.VITE_MEILI_SEARCH_KEY,
   });
   const LIMIT = 10;
   const clashIndex = client.index("clashes");
