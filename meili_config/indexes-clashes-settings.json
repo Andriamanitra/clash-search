@@ -1,6 +1,13 @@
 {
     "displayedAttributes": [
-        "*"
+        "title",
+        "lastVersion.data.statement",
+        "lastVersion.data.inputDescription",
+        "lastVersion.data.outputDescription",
+        "lastVersion.data.constraints",
+        "nickname",
+        "publicHandle",
+        "codingamerHandle"
     ],
     "searchableAttributes": [
         "title",

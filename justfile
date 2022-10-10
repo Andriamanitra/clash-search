@@ -56,6 +56,8 @@ configure-meili:
          -H "Content-Type: application/json" \
          -H "Authorization: Bearer $MEILI_MASTER_KEY" \
          --data-binary @meili_config/indexes-clashes-settings.json
+
+make-keys:
     curl -X POST "$VITE_MEILI_URL/keys" \
          -H "Content-Type: application/json" \
          -H "Authorization: Bearer $MEILI_MASTER_KEY" \
