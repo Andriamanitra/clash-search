@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import time
+from pathlib import Path
 
 import httpx
 
@@ -11,6 +12,7 @@ MEILI_URL = "http://localhost:7700/indexes/clashes/documents"
 MEILI_UPDATE_KEY = os.environ.get("MEILI_UPDATE_KEY")
 # the timestamp of the most recent update (as epoch time in milliseconds)
 LAST_UPDATED_TIME = int(os.environ.get("LAST_UPDATED_TIME") or 1665000000000)
+DATADIR = Path(__file__).parent.parent / "data"
 
 ClashCheckResult = namedtuple("ClashCheckResult", ["updated_count", "timestamp"])
 
@@ -49,7 +51,7 @@ async def check_clash_updates(session, last_updated_time) -> ClashCheckResult:
         print(f"{last_updated_time} : Failed to get clashes ({explanation(exc)})")
         return ClashCheckResult(0, last_updated_time)
 
-    with open("list_of_clashes.json", "w") as f:
+    with open(DATADIR / "list_of_clashes.json", "w") as f:
         f.write(resp.text)
 
     updated_clashes = []
@@ -76,7 +78,7 @@ async def check_clash_updates(session, last_updated_time) -> ClashCheckResult:
     if updated_count > 0:
         for clash_handle, clash_text in updated_clashes:
             # TODO: also put new clash to meilisearch
-            with open(f"clashes/{clash_handle}.json", "w") as f:
+            with open(DATADIR / "clashes" / f"{clash_handle}.json", "w") as f:
                 f.write(clash_text)
 
         if MEILI_UPDATE_KEY:

@@ -1,5 +1,4 @@
-*clashes.json
-clashes/*.json
+data/
 meili_data/
 .env*
 .envrc

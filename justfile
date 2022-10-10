@@ -32,7 +32,19 @@ up:
 down:
     docker-compose down
 
-put-clashes fname="clashes.json": up
+get-clashes +CLASHIDS:
+    #!/usr/bin/bash
+    for clashid in {{CLASHIDS}}; do
+        curl -Ss -X POST "https://www.codingame.com/services/Contribution/findContribution" \
+            -H "Content-Type: application/json" \
+            --data "[\"$clashid\", true]" \
+            --output tclashes/$clashid.json
+    done
+
+combine-clashes:
+    jq -n '[inputs]' data/clashes/*.json > data/clashes.json
+
+put-clashes fname="data/clashes.json": up
     curl -X POST "$VITE_MEILI_URL/indexes/clashes/documents" \
          -H "Content-Type: application/json" \
          -H "Authorization: Bearer $MEILI_UPDATE_KEY" \
@@ -45,7 +57,7 @@ configure-meili:
          --data-binary @meili-indexes-clashes-settings.json
 
 check-new-clashes: up
-    python3 check_new_clashes.py
+    python3 scripts/check_new_clashes.py
 
 @show-links:
     echo "Meili: http://localhost:7700"

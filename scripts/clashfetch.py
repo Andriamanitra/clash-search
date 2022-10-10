@@ -4,15 +4,18 @@
 
 import asyncio
 import json
+from pathlib import Path
 
 import httpx
+
+DATADIR = Path(__file__).parent.parent / "data"
 
 
 async def get_clash(session: httpx.AsyncClient, clash_handle: str):
     url = "https://www.codingame.com/services/Contribution/findContribution"
     response = await session.request("POST", url, json=[clash_handle, True])
     if response.status_code == 200:
-        with open(f"clashes/{clash_handle}.json", "w") as f:
+        with open(DATADIR / "clashes" / f"{clash_handle}.json", "w") as f:
             f.write(response.text)
     else:
         print(f"\nProblem fetching clash {clash_handle}\n\t{response.reason_phrase}")
