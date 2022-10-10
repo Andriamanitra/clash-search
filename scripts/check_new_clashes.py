@@ -8,7 +8,7 @@ from pathlib import Path
 
 import httpx
 
-MEILI_URL = "http://localhost:7700/indexes/clashes/documents"
+MEILI_URL = os.environ.get("VITE_MEILI_URL") + "/indexes/clashes/documents"
 MEILI_UPDATE_KEY = os.environ.get("MEILI_UPDATE_KEY")
 # the timestamp of the most recent update (as epoch time in milliseconds)
 LAST_UPDATED_TIME = int(os.environ.get("LAST_UPDATED_TIME") or 1665000000000)
