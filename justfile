@@ -54,7 +54,15 @@ configure-meili:
     curl -X PATCH "$VITE_MEILI_URL/indexes/clashes/settings" \
          -H "Content-Type: application/json" \
          -H "Authorization: Bearer $MEILI_MASTER_KEY" \
-         --data-binary @meili-indexes-clashes-settings.json
+         --data-binary @meili_config/indexes-clashes-settings.json
+    curl -X POST "$VITE_MEILI_URL/keys" \
+         -H "Content-Type: application/json" \
+         -H "Authorization: Bearer $MEILI_MASTER_KEY" \
+         --data-binary @meili_config/make-public-key.json
+    curl -X POST "$VITE_MEILI_URL/keys" \
+         -H "Content-Type: application/json" \
+         -H "Authorization: Bearer $MEILI_MASTER_KEY" \
+         --data-binary @meili_config/make-update-key.json
 
 check-new-clashes: up
     python3 scripts/check_new_clashes.py

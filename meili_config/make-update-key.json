@@ -1,0 +1,12 @@
+{
+    "name": "Key for updating clashes",
+    "actions": [
+        "documents.add",
+        "documents.get",
+        "documents.delete"
+    ],
+    "indexes": [
+        "clashes"
+    ],
+    "expiresAt": null
+}

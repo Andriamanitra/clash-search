@@ -1,0 +1,10 @@
+{
+    "name": "Public search key",
+    "actions": [
+        "search"
+    ],
+    "indexes": [
+        "clashes"
+    ],
+    "expiresAt": null
+}
