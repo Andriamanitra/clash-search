@@ -1,3 +1,7 @@
+# This script can be used to relatively quickly get all of the clashes.
+# For getting new/updated clashes it is better to use the script in
+# `check_new_clashes.py` file.
+
 import asyncio
 import json
 
@@ -15,9 +19,10 @@ async def get_clash(session: httpx.AsyncClient, clash_handle: str):
 
 
 async def amain(handles: list[str], n: int = 10):
+    print(f"fetching {len(handles)} clashes...")
     async with httpx.AsyncClient() as session:
         i = 0
-        while i + n < len(handles):
+        while i < len(handles):
             print(end=".", flush=True)
             coroutines = [get_clash(session, handle) for handle in handles[i:i+n]]
             await asyncio.gather(*coroutines)
