@@ -18,7 +18,7 @@ Before getting started make sure you have the following installed:
 
 1. `just mkdotenv` – creates `.env` file with default configuration for development
 1. `just install-deps build` – installs npm dependencies and builds the frontend
-1. `just up` – uses docker-compose to start MeiliSearch (on http://localhost:7700) and a nginx web server that server the front-end (on http://localhost:8000)
+1. `just up` – uses docker-compose to start MeiliSearch (on http://localhost:8000/meili/) and a nginx web server that serves the front-end (on http://localhost:8000)
 1.  Acquire some clashes for test data:
 ```just get-clashes 52980368bdbd05abdd789a04173b57b0fdea 682102420fbce0fce95e0ee56095ea2b9924```
 1. `just combine-clashes` – Combine the clashes into a single JSON file (stored in `data/clashes.json`)

@@ -7,12 +7,13 @@ mkdotenv:
     meili_master_key = input("Choose a master key for MeiliSearch: ")
     with open(".env", "w") as f:
         f.write(
+            'PORT=8000'
             f'MEILI_ENV=development\n'
             f'MEILI_MASTER_KEY="{meili_master_key}"\n'
             f'MEILI_UPDATE_KEY="{meili_master_key}"\n'
             'LAST_UPDATED_TIME=\n'
             'CODINGAME_COOKIES=\n'
-            'VITE_MEILI_URL="http://localhost:7700"\n'
+            'VITE_MEILI_URL="http://localhost:8000/meili"\n'
             f'VITE_MEILI_SEARCH_KEY="{meili_master_key}"\n'
         )
     print("Wrote .env (WARNING: this configuration is for DEVELOPMENT ONLY)")
@@ -66,7 +67,3 @@ configure-meili:
 
 check-new-clashes: up
     python3 scripts/check_new_clashes.py
-
-@show-links:
-    echo "Meili: http://localhost:7700"
-    echo "Front: http://localhost:8000"

@@ -3,17 +3,27 @@ version: '3.8'
 services:
   meili:
     image: getmeili/meilisearch:v0.29
+    container_name: meili
     environment:
       - "MEILI_MASTER_KEY=$MEILI_MASTER_KEY"
       - "MEILI_ENV=$MEILI_ENV"
-    ports:
-      - 7700:7700
+    expose:
+      - "7700"
     volumes:
       - ./meili_data:/meili_data
+    networks:
+      - clash_search_net
 
-  webserver:
+  nginx_server:
     image: nginx
+    container_name: nginx_server
     ports:
-      - 8000:80
+      - "$PORT:80"
     volumes:
       - ./frontend/dist:/usr/share/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - clash_search_net
+
+networks:
+  clash_search_net:
