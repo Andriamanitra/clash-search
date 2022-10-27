@@ -58,6 +58,7 @@
       bind:value={query}
       placeholder="search by title, statement, tests..."
       minlength="3"
+      autofocus
     />
   </form>
 </header>
