@@ -1,5 +1,6 @@
 <script>
   import { MeiliSearch } from "meilisearch";
+  import GithubLink from "./lib/GithubLink.svelte";
 
   const client = new MeiliSearch({
     host: import.meta.env.VITE_MEILI_URL,
@@ -40,16 +41,19 @@
 
 <header>
   <h1>Clash search</h1>
-  <button
-    class="darkmode-switch"
-    title="Toggle dark mode"
-    on:click={() => {
-      document.getElementsByTagName("body")[0].toggleAttribute("dark");
-      dark = !dark;
-    }}
-  >
-    {dark ? "☀️" : "🌙"}
-  </button>
+  <div class="header-links">
+    <GithubLink repo="andriamanitra/clash-search" />
+    <button
+      class="darkmode-switch"
+      title="Toggle dark mode"
+      on:click={() => {
+        document.getElementsByTagName("body")[0].toggleAttribute("dark");
+        dark = !dark;
+      }}
+    >
+      {dark ? "☀️" : "🌙"}
+    </button>
+  </div>
   <form on:submit={handleSearchChange}>
     <input
       id="searchbox"
