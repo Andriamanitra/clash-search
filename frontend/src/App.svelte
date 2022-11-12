@@ -107,13 +107,25 @@
   </div>
 </main>
 <footer>
-  {#if results.estimatedTotalHits && clashes.length > 0}
-    <button on:click={previousPage} disabled={offset == 0}>
-      Prev
+  {#if clashes.length == LIMIT || offset > 0}
+    <button
+      on:click={() => {
+        document.querySelector("#searchbox").scrollIntoView();
+        previousPage();
+      }}
+      disabled={offset == 0}
+    >
+      Previous page
     </button>
 
-    <button on:click={nextPage} disabled={clashes.length < LIMIT}>
-      Next
+    <button
+      on:click={() => {
+        document.querySelector("#searchbox").scrollIntoView();
+        nextPage();
+      }}
+      disabled={clashes.length < LIMIT}
+    >
+      Next page
     </button>
   {/if}
 </footer>
