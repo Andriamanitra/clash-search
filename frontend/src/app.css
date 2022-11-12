@@ -51,8 +51,8 @@ body[dark] {
   --header-link-size: 3rem;
 }
 
-.header-links>button,
-.header-links>a {
+.header-links > button,
+.header-links > a {
   cursor: pointer;
   border-radius: 100%;
   width: var(--header-link-size);
@@ -62,6 +62,10 @@ body[dark] {
 
 .github-link {
   background: var(--white);
+  fill: var(--almost-black);
+  transition-property: fill;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.2s;
 }
 
 .github-svg {
@@ -148,6 +152,11 @@ body[dark] button:hover:enabled {
   background: var(--gray);
 }
 
+body[dark] .github-link:hover,
+body .github-link:hover {
+  fill: var(--gray);
+}
+
 body[dark] button:disabled,
 button:disabled {
   opacity: 0.5;
@@ -168,7 +177,7 @@ body[dark] .info {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
   margin-top: 20px;
 }
 
@@ -213,13 +222,13 @@ body[dark] .card-header:hover {
   font-size: medium;
 }
 
-.author>a {
+.author > a {
   color: inherit;
   text-decoration: inherit;
   border-radius: 3px;
 }
 
-.author>a:hover {
+.author > a:hover {
   text-decoration: underline;
 }
 
@@ -235,4 +244,10 @@ body[dark] .card-header:hover {
 
 body[dark] .card-content {
   color: var(--light-gray);
+}
+
+/* ------------------------------- */
+/* in footer */
+footer {
+  padding: 2rem 0;
 }
