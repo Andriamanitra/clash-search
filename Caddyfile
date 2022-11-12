@@ -1,0 +1,8 @@
+codingame.tools {
+    root * /srv
+    file_server
+}
+
+meili.codingame.tools {
+    reverse_proxy meili:7700
+}
