@@ -10,7 +10,6 @@ Background: the CG puzzle search site at http://eulerschezahl.herokuapp.com/codi
 Before getting started make sure you have the following installed:
 * [Just](https://github.com/casey/just) (command runner, bit like `make` but more advanced)
 * [Docker](https://www.docker.com/) (containerization)
-* [Docker-compose](https://github.com/docker/compose/releases) (container orchestration)
 * [curl](https://curl.se/) (for making http requests)
 * [jq](https://github.com/stedolan/jq) (for processing JSON files)
 * [node.js](https://nodejs.org/en/) (for developing front-end)
