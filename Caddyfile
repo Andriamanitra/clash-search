@@ -1,0 +1,8 @@
+codingame.tools {
+    root * /home/mikko/koodit/Web/cgsearch/frontend/dist
+    file_server
+}
+
+meili.codingame.tools {
+    reverse_proxy :7700
+}

@@ -14,16 +14,26 @@ services:
     networks:
       - clash_search_net
 
-  nginx_server:
-    image: nginx
-    container_name: nginx_server
+  caddy_server:
+    image: caddy:2.6.2-alpine
+    restart: unless-stopped
+    container_name: caddy_server
     ports:
-      - "$PORT:80"
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
     volumes:
-      - ./frontend/dist:/usr/share/nginx/html
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./frontend/dist:/srv
+      - caddy_data:/data
+      - caddy_config:/config
     networks:
       - clash_search_net
+
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:
 
 networks:
   clash_search_net:
