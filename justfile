@@ -13,13 +13,25 @@ mkdotenv:
             f'MEILI_UPDATE_KEY="{meili_master_key}"\n'
             'LAST_UPDATED_TIME=\n'
             'CODINGAME_COOKIES=\n'
-            'VITE_MEILI_URL="http://localhost:8000/meili"\n'
+            'VITE_MEILI_URL="http://localhost:7700"\n'
             f'VITE_MEILI_SEARCH_KEY="{meili_master_key}"\n'
         )
     print("Wrote .env (WARNING: this configuration is for DEVELOPMENT ONLY)")
 
 install-deps:
     cd frontend && npm install
+
+meili-up:
+    docker run -d --rm \
+        --name clash-search-meili \
+        --env MEILI_MASTER_KEY=$MEILI_MASTER_KEY \
+        --env MEILI_ENV=$MEILI_ENV \
+        -p 7700:7700 \
+        -v $PWD/meili_data:/meili_data \
+        getmeili/meilisearch:v0.29
+
+meili-down:
+    docker container stop clash-search-meili
 
 dev:
     cd frontend && npm run dev

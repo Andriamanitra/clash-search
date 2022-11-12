@@ -18,13 +18,13 @@ Before getting started make sure you have the following installed:
 
 1. `just mkdotenv` – creates `.env` file with default configuration for development
 1. `just install-deps build` – installs npm dependencies and builds the frontend
-1. `just up` – uses docker-compose to start MeiliSearch (on http://localhost:8000/meili/) and a nginx web server that serves the front-end (on http://localhost:8000)
+1. `just meili-up` – uses Docker to start MeiliSearch (on http://localhost:7700)
 1.  Acquire some clashes for test data:
 ```just get-clashes 52980368bdbd05abdd789a04173b57b0fdea 682102420fbce0fce95e0ee56095ea2b9924```
 1. `just combine-clashes` – Combine the clashes into a single JSON file (stored in `data/clashes.json`)
 1. `just put-clashes data/clashes.json`
 
-When you're done use `just down` to shut down the docker containers. The data for MeiliSearch will be preserved under `meili_data/` for the next time so you can continue where you left off by running `just up`.
+When you're done use `just meili-down` to shut down the Meili docker container. The data for MeiliSearch will be preserved under `meili_data/` for the next time.
 
 To acquire all of the clashes you can follow the instructions in the dedicated section for using the undocumented CodinGame API (`scripts/clashfetch.py` may also help in the process).
 
