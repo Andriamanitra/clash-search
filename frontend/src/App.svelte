@@ -106,3 +106,14 @@
     {/each}
   </div>
 </main>
+<footer>
+  {#if results.estimatedTotalHits && clashes.length > 0}
+    <button on:click={previousPage} disabled={offset == 0}>
+      Prev
+    </button>
+
+    <button on:click={nextPage} disabled={clashes.length < LIMIT}>
+      Next
+    </button>
+  {/if}
+</footer>
