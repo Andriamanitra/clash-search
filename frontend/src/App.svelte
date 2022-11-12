@@ -93,7 +93,7 @@
           <span class="title">{title}</span>
 
           <span class="author"
-            >by <a href="https://codingame.com/{codingamerHandle}">
+            >by <a href="https://codingame.com/profile/{codingamerHandle}">
               {nickname || "Anonymous"}
             </a>
           </span>
