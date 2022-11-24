@@ -113,7 +113,7 @@ async def amain():
     else:
         print("[WARNING] CODINGAME_COOKIES is not set, this might not work", file=sys.stderr)
 
-    async with httpx.AsyncClient(cookies=cookies) as session:
+    async with httpx.AsyncClient(cookies=cookies, timeout=15.0) as session:
         while True:
             r = await check_clash_updates(session, last_updated_time)
             updated_count = r.updated_count
