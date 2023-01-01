@@ -51,7 +51,7 @@ get-clashes +CLASHIDS:
         curl -Ss -X POST "https://www.codingame.com/services/Contribution/findContribution" \
             -H "Content-Type: application/json" \
             --data "[\"$clashid\", true]" \
-            --output tclashes/$clashid.json
+            --output data/clashes/$clashid.json
     done
 
 combine-clashes:
