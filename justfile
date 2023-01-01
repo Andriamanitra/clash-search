@@ -58,7 +58,8 @@ combine-clashes:
     jq -n '[inputs]' data/clashes/*.json > data/clashes.json
 
 check-missing-clashes:
-    @comm -23 <(jq -r '.[].publicHandle' data/list_of_clashes.json | sort) <(find data/clashes/ -name '*.json' -printf "%f\n" | awk -F. '$0=$1' | sort)
+    #!/usr/bin/bash
+    comm -23 <(jq -r '.[].publicHandle' data/list_of_clashes.json | sort) <(find data/clashes/ -name '*.json' -printf "%f\n" | awk -F. '$0=$1' | sort)
 
 put-clashes fname="data/clashes.json": up
     curl -X POST "$VITE_MEILI_URL/indexes/clashes/documents" \
