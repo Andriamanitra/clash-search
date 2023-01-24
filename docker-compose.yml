@@ -25,15 +25,8 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - ./frontend/dist:/srv
-      - caddy_data:/data
-      - caddy_config:/config
     networks:
       - clash_search_net
-
-volumes:
-  caddy_data:
-    external: true
-  caddy_config:
 
 networks:
   clash_search_net:
