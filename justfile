@@ -83,5 +83,5 @@ make-keys:
          -H "Authorization: Bearer $MEILI_MASTER_KEY" \
          --data-binary @meili_config/make-update-key.json
 
-check-new-clashes: up
-    python3 scripts/check_new_clashes.py
+check-new-clashes:
+    python3 scripts/check_updates.py
