@@ -177,7 +177,7 @@ body[dark] .info {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   margin-top: 20px;
 }
 
@@ -249,5 +249,5 @@ body[dark] .card-content {
 /* ------------------------------- */
 /* in footer */
 footer {
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
