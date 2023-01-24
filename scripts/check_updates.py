@@ -76,7 +76,6 @@ async def update_clashes(session):
         # 4. save file
         with open(DATADIR / "clashes" / f"{clash_handle}.json", "w") as f:
             f.write(response.text)
-        break
 
     if not updated_clashes:
         return
