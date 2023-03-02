@@ -5,6 +5,7 @@
         "lastVersion.data.inputDescription",
         "lastVersion.data.outputDescription",
         "lastVersion.data.constraints",
+        "lastVersion.data.testCases",
         "nickname",
         "publicHandle",
         "codingamerHandle"
