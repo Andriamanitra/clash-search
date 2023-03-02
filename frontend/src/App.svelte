@@ -1,5 +1,6 @@
 <script>
   import { MeiliSearch } from "meilisearch";
+  import ClashCard from "./lib/ClashCard.svelte";
   import GithubLink from "./lib/GithubLink.svelte";
 
   const client = new MeiliSearch({
@@ -84,25 +85,8 @@
     </div>
   {/if}
   <div class="container">
-    {#each clashes as { title, nickname, publicHandle, codingamerHandle, lastVersion }}
-      <div class="card">
-        <a
-          class="card-header"
-          href="https://codingame.com/contribute/view/{publicHandle}"
-        >
-          <span class="title">{title}</span>
-
-          <span class="author"
-            >by <a href="https://codingame.com/profile/{codingamerHandle}">
-              {nickname || "Anonymous"}
-            </a>
-          </span>
-        </a>
-
-        <p class="card-content">
-          {lastVersion.data.statement}
-        </p>
-      </div>
+    {#each clashes as clash}
+      <ClashCard {clash} />
     {/each}
   </div>
 </main>

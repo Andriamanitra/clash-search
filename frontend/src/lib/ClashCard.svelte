@@ -1,0 +1,112 @@
+<script>
+    export let clash;
+    let {
+        statement,
+        testCases,
+        inputDescription,
+        outputDescription,
+        constraints,
+    } = clash?.lastVersion?.data;
+
+    /**
+     * Returns a new string with special formatting syntax removed
+     * - bolded:    <<A>>
+     * - variables: [[A]]
+     * - constants: {{A}}
+     * @param {string} txt
+     */
+    function removeFormatting(txt) {
+        return txt
+            .replaceAll(/<<(.+?)>>/g, "$1")
+            .replaceAll(/\[\[(.+?)\]\]/g, "$1")
+            .replaceAll(/\{\{(.+?)\}\}/g, "$1");
+    }
+</script>
+
+<div class="card">
+    <a
+        class="card-header"
+        href="https://codingame.com/contribute/view/{clash.publicHandle}"
+    >
+        <span class="title">{clash.title}</span>
+
+        <span class="author"
+            >by <a
+                href="https://codingame.com/profile/{clash.codingamerHandle}"
+            >
+                {clash.nickname || "Anonymous"}
+            </a>
+        </span>
+    </a>
+
+    <div class="card-content">
+        <p class="statement">{removeFormatting(statement)}</p>
+        <div class="example test-in-out">
+            <pre class="test-case in">{testCases[0].testIn}</pre>
+            <pre class="test-case out">{testCases[0].testOut}</pre>
+        </div>
+        <details class="details">
+            <summary>Details</summary>
+            <h3 class="description-title">Input description</h3>
+            <div class="description">{removeFormatting(inputDescription)}</div>
+            <h3 class="description-title">Output description</h3>
+            <div class="description">{removeFormatting(outputDescription)}</div>
+            {#if constraints}
+                <h3 class="description-title">Constraints</h3>
+                <div class="description">{removeFormatting(constraints)}</div>
+            {/if}
+        </details>
+        <details class="details test-cases">
+            <summary>All test cases</summary>
+            <div class="test-in-out">
+                {#each testCases as testCase}
+                    <pre class="test-case in">{testCase.testIn}</pre>
+                    <pre class="test-case out">{testCase.testOut}</pre>
+                {/each}
+            </div>
+        </details>
+    </div>
+</div>
+
+<style>
+    .statement {
+        max-height: 10em;
+        overflow: auto;
+    }
+    h3 {
+        margin-bottom: 0;
+    }
+    .test-case::before {
+        content: "";
+        position: absolute;
+        font-size: 0.8em;
+        margin-top: -2em;
+        color: var(--gray);
+    }
+    .in::before {
+        content: "Input";
+    }
+    .out::before {
+        content: "Output";
+    }
+    .details summary {
+        cursor: pointer;
+    }
+    .details {
+        outline: 1px solid var(--gray);
+        padding: 0.5em;
+    }
+    .test-in-out {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2ch;
+    }
+    .test-case {
+        flex-grow: 1;
+        margin: 0.5em 0em;
+        padding: 0.6ch;
+        outline: 1px solid var(--gray);
+        max-height: 30em;
+        overflow: auto;
+    }
+</style>
