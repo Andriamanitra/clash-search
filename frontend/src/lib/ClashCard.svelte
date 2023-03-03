@@ -1,12 +1,12 @@
 <script>
     export let clash;
-    let {
+    $: ({
         statement,
         testCases,
         inputDescription,
         outputDescription,
         constraints,
-    } = clash?.lastVersion?.data;
+    } = clash?.lastVersion?.data);
 
     /**
      * Returns a new string with special formatting syntax removed
