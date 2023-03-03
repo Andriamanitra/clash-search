@@ -61,8 +61,8 @@ check-missing-clashes:
     #!/usr/bin/bash
     comm -23 <(jq -r '.[].publicHandle' data/list_of_clashes.json | sort) <(find data/clashes/ -name '*.json' -printf "%f\n" | awk -F. '$0=$1' | sort)
 
-put-clashes fname="data/clashes.json": up
-    curl -X POST "$VITE_MEILI_URL/indexes/clashes/documents" \
+put-clashes fname="data/clashes.json":
+    curl -X POST "$VITE_MEILI_URL/indexes/clashes/documents?primaryKey=publicHandle" \
          -H "Content-Type: application/json" \
          -H "Authorization: Bearer $MEILI_UPDATE_KEY" \
          --data-binary @{{fname}}

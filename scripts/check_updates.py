@@ -83,7 +83,7 @@ async def update_clashes(session):
     # 5. upload to meili
     try:
         httpx.post(
-            MEILI_URL,
+            MEILI_URL+"?primaryKey=publicHandle",
             headers={"Authorization": f"Bearer {MEILI_UPDATE_KEY}"},
             json=updated_clashes
         ).raise_for_status()
