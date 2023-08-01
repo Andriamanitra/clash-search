@@ -2,6 +2,7 @@
   import { MeiliSearch } from "meilisearch";
   import ClashCard from "./lib/ClashCard.svelte";
   import GithubLink from "./lib/GithubLink.svelte";
+  import { onMount } from "svelte";
 
   const client = new MeiliSearch({
     host: import.meta.env.VITE_MEILI_URL,
@@ -12,13 +13,26 @@
   let offset = 0;
   let query = "";
   let results = { hits: [] };
+
   function handleSearchChange(ev) {
+    history.replaceState(
+      null,
+      "",
+      window.location.origin + window.location.pathname
+    );
+  }
+
+  function handleSubmit(ev) {
     offset = 0;
     searchClashes();
+    if (query !== "") {
+      history.replaceState({ query }, "", `?q=${encodeURIComponent(query)}`);
+    }
     ev.preventDefault();
   }
+
   function searchClashes() {
-    if (query.length < 2) {
+    if (query.length < 3) {
       results = { hits: [] };
     } else {
       clashIndex.search(query, { limit: LIMIT, offset: offset }).then((r) => {
@@ -26,16 +40,27 @@
       });
     }
   }
+
   function previousPage() {
     offset = Math.max(0, offset - LIMIT);
     searchClashes();
   }
+
   function nextPage() {
     offset = offset + LIMIT;
     searchClashes();
   }
 
   let dark = true;
+
+  onMount(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const q = searchParams.get("q");
+    if (q) {
+      query = q;
+      searchClashes();
+    }
+  });
 
   $: clashes = [...results["hits"]];
 </script>
@@ -55,12 +80,13 @@
       {dark ? "☀️" : "🌙"}
     </button>
   </div>
-  <form on:submit={handleSearchChange}>
+  <form on:submit={handleSubmit}>
     <input
       id="searchbox"
       name="searchbox"
       type="text"
       bind:value={query}
+      on:input={handleSearchChange}
       placeholder="search by title, statement, tests..."
       minlength="3"
       autofocus
