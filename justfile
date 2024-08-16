@@ -22,13 +22,10 @@ install-deps:
     cd frontend && npm install
 
 meili-up:
-    docker run -d --rm \
+    docker compose run -d --rm \
         --name clash-search-meili \
-        --env MEILI_MASTER_KEY=$MEILI_MASTER_KEY \
-        --env MEILI_ENV=$MEILI_ENV \
         -p 7700:7700 \
-        -v $PWD/meili_data:/meili_data \
-        getmeili/meilisearch:v0.29
+        meili
 
 meili-down:
     docker container stop clash-search-meili
