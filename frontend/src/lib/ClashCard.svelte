@@ -69,12 +69,23 @@
 </div>
 
 <style>
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .statement, .description {
+        white-space: pre-wrap;
+    }
     .statement {
         max-height: 10em;
         overflow: auto;
     }
     h3 {
-        margin-bottom: 0;
+        margin: 5px 0;
+    }
+    h3:nth-of-type(n+2) {
+        margin-top: 1em;
     }
     .test-case::before {
         content: "";
@@ -96,6 +107,9 @@
         outline: 1px solid var(--gray);
         padding: 0.5em;
     }
+    .details :nth-child(2) {
+        margin-top: 12px;
+    }
     .test-in-out {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -103,8 +117,8 @@
     }
     .test-case {
         flex-grow: 1;
-        margin: 0.5em 0em;
-        padding: 0.6ch;
+        margin: 1em 0 0 0;
+        padding: 3px 1ch;
         outline: 1px solid var(--gray);
         max-height: 30em;
         overflow: auto;
